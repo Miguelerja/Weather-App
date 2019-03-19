@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import CurrentWeather from './components/currentWeather/CurrentWeather';
+import weatherService from './utils/weather-service';
 class App extends Component {
+  state = {
+    location: null,
+  };
+
+  setCoordinates = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({
+        location: {
+          long: position.coords.longitude,
+          lat: position.coords.latitude,
+        }
+      });
+    });
+  };
+
+  componentDidMount () {
+    this.setCoordinates();
+  };
+
+  componentDidUpdate () {
+    weatherService.getWeatherByCoords(this.state.location)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => console.log(error))
+  };
+
   render() {
+    const { location } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      {(location) ? 
+        <CurrentWeather />
+        :
+        <p>Loading</p>
+      }
       </div>
     );
   }
