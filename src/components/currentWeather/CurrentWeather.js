@@ -5,6 +5,12 @@ export default class CurrentWeather extends Component {
     celsius: false,
   };
 
+  handleClick = () => {
+    this.setState({
+      celsius: !this.state.celsius,
+    });
+  };
+
   render() {
     const { temp, clouds, wind, image, weather, description } = this.props;
     const { celsius } = this.state;
@@ -13,7 +19,7 @@ export default class CurrentWeather extends Component {
         <img src={image} alt={weather} />
         <p onClick={this.handleClick}>
           {(celsius) 
-            ? (temp - 32) * 5 / 9
+            ? (temp - 32) * (5 / 9)
             : temp
           }
         </p>
