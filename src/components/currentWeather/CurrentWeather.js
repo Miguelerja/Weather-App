@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class CurrentWeather extends Component {
   state = {
@@ -83,3 +84,11 @@ export default class CurrentWeather extends Component {
     )
   }
 }
+
+CurrentWeather.propTypes = {
+  description: PropTypes.string.isRequired,
+  clouds: PropTypes.number.isRequired,
+  wind: PropTypes.number.isRequired,
+  temp: PropTypes.number.isRequired,
+  weather: PropTypes.string.isRequired,
+};
