@@ -6,35 +6,44 @@ class App extends Component {
     location: null,
   };
 
-  setCoordinates = () => {
+  getLocationWeather = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
-        location: {
-          long: position.coords.longitude,
-          lat: position.coords.latitude,
-        }
-      });
+      const location = {
+        long: position.coords.longitude,
+        lat: position.coords.latitude,
+      };
+      
+      weatherService.getWeatherByCoords(location)
+        .then(response => {
+          const { main, weather, clouds, wind } = response;
+          this.setState({
+            location: location,
+            weather: weather[0],
+            clouds: clouds,
+            wind: wind,
+            conditions: main,
+          });
+        })
+        .catch(error => console.log(error))
     });
   };
 
   componentDidMount () {
-    this.setCoordinates();
-  };
-
-  componentDidUpdate () {
-    weatherService.getWeatherByCoords(this.state.location)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => console.log(error))
+    this.getLocationWeather();
   };
 
   render() {
-    const { location } = this.state;
+    const { location, weather, clouds, wind, conditions } = this.state;
     return (
       <div className="App">
       {(location) ? 
-        <CurrentWeather />
+        <CurrentWeather 
+          weather={weather.main}
+          temp={conditions.temp}
+          description={weather.description}
+          wind={wind.speed}
+          clouds={clouds.all}
+        />
         :
         <p>Loading</p>
       }
