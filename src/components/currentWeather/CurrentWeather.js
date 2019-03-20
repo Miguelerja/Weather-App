@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './currentWeather.css';
 
 export default class CurrentWeather extends Component {
   state = {
@@ -69,17 +70,26 @@ export default class CurrentWeather extends Component {
     const { temp, clouds, wind, weather, description } = this.props;
     const { celsius, image } = this.state;
     return (
-      <div>
-        <img src={image} alt={weather} />
-        <p onClick={this.handleClick}>
-          {(celsius) 
-            ? (temp - 32) * (5 / 9)
-            : temp
-          }
-        </p>
-        <p>{description}</p>
-        <p>{clouds}</p>
-        <p>{wind}</p>
+      <div className='container'>
+        <div className='icon-container'>
+          <h1 className='description'>{description}</h1>
+          <img className='icon' src={image} alt={weather} />
+          <div className='temp-container'>
+            <img src='/images/farenheit-small.png' alt='thermometer'/>
+            <p className='temp' onClick={this.handleClick}>
+              {(celsius) 
+                ? Math.round((temp - 32) * (5 / 9))
+                : temp
+              }
+            </p>
+          </div>
+        </div>
+        <div className='info-panel'>
+          <img src='/images/cloud-small.png' alt='clouds'/>
+          <p className='clouds'>{clouds}%</p>
+          <img src='/images/wind-small.png' alt='wind'/>
+          <p className='wind'>{wind} Km/h</p>
+        </div>
       </div>
     )
   }
