@@ -2,6 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './currentWeather.css';
 
+const Temperature = (props) => {
+  const { temp, celsius, handleClick } = props;
+
+  const click = () => {
+    handleClick()
+  };
+  
+  return(
+    <div className='temp-container'>
+      <img src='/images/farenheit-small.png' alt='thermometer'/>
+      <p className='temp' onClick={click}>
+        {(celsius) 
+          ? Math.round((temp - 32) * (5 / 9))
+          : temp
+        }
+      </p>
+    </div>
+  )
+};
+
+Temperature.propTypes = {
+  temp: PropTypes.number.isRequired,
+  celsius: PropTypes.bool.isRequired,
+  handleClick: PropTypes.func.isRequired,
+};
+
 export default class CurrentWeather extends Component {
   state = {
     celsius: false,
@@ -74,16 +100,14 @@ export default class CurrentWeather extends Component {
         <div className='icon-container'>
           <h1 className='description'>{description}</h1>
           <img className='icon' src={image} alt={weather} />
-          <div className='temp-container'>
-            <img src='/images/farenheit-small.png' alt='thermometer'/>
-            <p className='temp' onClick={this.handleClick}>
-              {(celsius) 
-                ? Math.round((temp - 32) * (5 / 9))
-                : temp
-              }
-            </p>
-          </div>
+          
+          <Temperature 
+            temp={temp} 
+            celsius={celsius} 
+            handleClick={this.handleClick}
+          />         
         </div>
+
         <div className='info-panel'>
           <img src='/images/cloud-small.png' alt='clouds'/>
           <p className='clouds'>{clouds}%</p>
