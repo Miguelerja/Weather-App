@@ -4,6 +4,7 @@ import weatherService from './utils/weather-service';
 class App extends Component {
   state = {
     location: null,
+    currentWeather: {},
   };
 
   getLocationWeather = () => {
@@ -16,13 +17,21 @@ class App extends Component {
       weatherService.getWeatherByCoords(location)
         .then(response => {
           const { main, weather, clouds, wind } = response;
-          this.setState({
-            location: location,
+          const currentWeather = {
             weather: weather[0],
             clouds: clouds,
             wind: wind,
             conditions: main,
+          };
+
+          this.setState({
+            location: location,
+            currentWeather: currentWeather,
           });
+        })
+        .then(() => {
+          weatherService.getForecastByCoords(location)
+            .then((response => console.log(response)))
         })
         .catch(error => console.log(error))
     });
@@ -33,7 +42,8 @@ class App extends Component {
   };
 
   render() {
-    const { location, weather, clouds, wind, conditions } = this.state;
+    const { weather, clouds, wind, conditions } = this.state.currentWeather;
+    const { location } = this.state;
     return (
       <div className="App">
       {(location) ? 

@@ -13,6 +13,12 @@ class WeatherService {
     return this.weather.get(`/weather?lat=${lat}&lon=${long}&appid=${this.token}`)
       .then(({ data }) => data);
   }
+  
+  getForecastByCoords(location){
+    const { long, lat } = location;
+    return this.weather.get(`/forecast?lat=${lat}&lon=${long}&appid=${this.token}`)
+      .then(({ data }) => data);
+  }
 };
 
 const weatherService = new WeatherService();

@@ -4,18 +4,18 @@ import './currentWeather.css';
 
 const Temperature = (props) => {
   const { temp, celsius, handleClick } = props;
-
+  const celsiusTherm = '/images/thermometer-C.png';
+  const farenheitTherm = '/images/thermometer-F.png';
   const click = () => {
     handleClick()
   };
-  
   return(
     <div className='temp-container'>
-      <img src='/images/farenheit-small.png' alt='thermometer'/>
+      <img src={(celsius)? celsiusTherm : farenheitTherm} alt='thermometer'/>
       <p className='temp' onClick={click}>
         {(celsius) 
-          ? Math.round((temp - 32) * (5 / 9))
-          : temp
+          ? Math.round(temp - 273)
+          : Math.round(1.8 * (temp - 273) + 32)
         }
       </p>
     </div>
@@ -93,13 +93,27 @@ export default class CurrentWeather extends Component {
   };
 
   render() {
-    const { temp, clouds, wind, weather, description } = this.props;
-    const { celsius, image } = this.state;
+    const {
+      temp,
+      clouds,
+      wind,
+      weather,
+      description
+    } = this.props;
+    const {
+      celsius,
+      image
+    } = this.state;
+    
     return (
       <div className='container'>
         <div className='icon-container'>
           <h1 className='description'>{description}</h1>
-          <img className='icon' src={image} alt={weather} />
+          <img 
+            className='icon' 
+            src={image} 
+            alt={weather} 
+          />
           
           <Temperature 
             temp={temp} 
