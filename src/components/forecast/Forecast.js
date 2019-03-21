@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Temperature from '../temperature/Temperature';
+import './forecast.css';
 
 const Forecast = (props) => {
   const listForescast = () => {
     const { forecast, farenheit, icon } = props;
 
-    return forecast.map(forecast => {
+    return forecast.map((forecast, index) => {
       const { temp } = forecast.main;
       const { description, main } = forecast.weather[0];
 
       return(
-        <div className='forecast-item'>
-          <img className='forescast-icon' src={icon} alt={description}/>
+        <div className='forecast-item' key={`${temp}${index}`}>
+          <img className='forecast-icon' src={icon} alt={description}/>
           <Temperature
             temp={temp}
             farenheit={farenheit}
@@ -24,8 +25,9 @@ const Forecast = (props) => {
       );
     });
   };
+
   return(
-    <div>
+    <div className='forecast-container'>
       {listForescast()}
     </div>
   )

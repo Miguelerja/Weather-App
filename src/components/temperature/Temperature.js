@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Temperature = (props) => {
-  const { temp, farenheit, handleClick, className } = props;
+  const { temp, farenheit, handleClick, pclassName, containerClassName } = props;
   const celsiusTherm = '/images/thermometer-C.png';
   const farenheitTherm = '/images/thermometer-F.png';
   const click = () => {
     handleClick()
   };
   return(
-    <div className='temp-container'>
+    <div className={containerClassName}>
       <img src={(farenheit)? farenheitTherm : celsiusTherm} alt='thermometer'/>
-      <p className={className} onClick={click}>
+      <p className={pclassName} onClick={click}>
         {(farenheit) 
           ? Math.round(1.8 * (temp - 273) + 32)
           : Math.round(temp - 273)

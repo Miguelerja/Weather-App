@@ -1,0 +1,38 @@
+.forecast-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 20%;
+}
+
+.forecast-item{
+  width: 15%;
+}
+
+.forecast-icon{
+  width: 3rem;
+  height: 3rem;
+}
+
+.forecast-temp-container{
+  display: flex;
+}
+
+.forecast-temp-container img{
+  width: 1rem;
+  height: 1rem;
+}
+
+.forecast-temp-container p{
+  font-size: 1rem;
+}
+
+.forecast-temp{
+  color: white;
+}
+
+.forecast-desc{
+  color: white;
+  font-size: 1rem;
+}

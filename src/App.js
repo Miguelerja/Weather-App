@@ -5,6 +5,7 @@ class App extends Component {
   state = {
     location: null,
     currentWeather: {},
+    forecast: [],
     farenheit: false,
     image: null,
   };
@@ -89,7 +90,7 @@ class App extends Component {
                 response.list[16],
                 response.list[24],
                 response.list[32],
-                response.list[40]
+                response.list[39]
               ];
               this.setState({
                 forecast: forecast,
