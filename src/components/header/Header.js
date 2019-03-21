@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './header.css';
 
-
-
 class Header extends Component  {
   state = {
     clicked: false,
@@ -33,14 +31,15 @@ class Header extends Component  {
   };
 
   toggleDescription = () => {
+    const { clicked } = this.state;
     this.setState({
-      clicked: !this.state.clicked,
+      clicked: !clicked,
     });
   };
 
   render () {
     const { clicked } = this.state;
-    const { weather, description } = this.props;
+    const { weather } = this.props;
     return (
       <p className={(clicked) ? 'weather' : 'description'} onClick={this.toggleDescription}>
         {(clicked) 
