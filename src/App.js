@@ -1,10 +1,60 @@
 import React, { Component } from 'react';
 import CurrentWeather from './components/currentWeather/CurrentWeather';
+import Forecast from './components/forecast/Forecast';
 import weatherService from './utils/weather-service';
 class App extends Component {
   state = {
     location: null,
     currentWeather: {},
+    farenheit: false,
+    image: null,
+  };
+
+  setIcon = (weather) => {
+    switch(weather) {
+      case 'Thunderstorm':
+        this.setState({
+          image: '/images/storm.png',
+        })
+        break;
+      case 'Drizzle':
+        this.setState({
+          image: '/images/Drizzle.png',
+        })
+        break;
+      case 'Rain':
+        this.setState({
+          image: '/images/rain.png',
+        })
+        break;
+      case 'Snow':
+        this.setState({
+          image: '/images/snow.png',
+        })
+        break;
+      case 'Clear':
+        this.setState({
+          image: '/images/sunny.png',
+        })
+        break;
+      case 'Fog':
+        this.setState({
+          image: '/images/fog.png',
+        })
+        break;
+      case 'Tornado':
+        this.setState({
+          image: '/images/tornado.png',
+        })
+        break;
+      case 'Clouds':
+        this.setState({
+          image: '/images/cloudy.png',
+        })
+        break;
+      default:
+        return null;
+    };
   };
 
   getLocationWeather = () => {
@@ -23,15 +73,29 @@ class App extends Component {
             wind: wind,
             conditions: main,
           };
-
           this.setState({
             location: location,
             currentWeather: currentWeather,
           });
         })
         .then(() => {
+          const weather = this.state.currentWeather.weather.main;
+          this.setIcon(weather);
+        })
+        .then(() => {
           weatherService.getForecastByCoords(location)
-            .then((response => console.log(response)))
+            .then(response => {
+              const forecast = [
+                response.list[8],
+                response.list[16],
+                response.list[24],
+                response.list[32],
+                response.list[40]
+              ];
+              this.setState({
+                forecast: forecast,
+              });
+            })
         })
         .catch(error => console.log(error))
     });
@@ -41,19 +105,35 @@ class App extends Component {
     this.getLocationWeather();
   };
 
+  toggleTemp = () => {
+    this.setState({
+      farenheit: !this.state.farenheit,
+    });
+  };
+
   render() {
     const { weather, clouds, wind, conditions } = this.state.currentWeather;
-    const { location } = this.state;
+    const { location, forecast, farenheit, image } = this.state;
     return (
       <div className="App">
       {(location) ? 
-        <CurrentWeather 
-          weather={weather.main}
-          temp={conditions.temp}
-          description={weather.description}
-          wind={wind.speed}
-          clouds={clouds.all}
-        />
+        <>
+          <CurrentWeather 
+            weather={weather.main}
+            temp={conditions.temp}
+            description={weather.description}
+            wind={wind.speed}
+            clouds={clouds.all}
+            farenheit={farenheit}
+            toggleTemp={this.toggleTemp}
+            icon={image}
+          />
+          <Forecast 
+            forecast={forecast} 
+            farenheit={farenheit}
+            icon={image}
+          />
+        </>
         :
         <p>Loading</p>
       }

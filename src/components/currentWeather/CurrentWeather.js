@@ -1,136 +1,63 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './currentWeather.css';
+import Temperature from '../temperature/Temperature';
 
-const Temperature = (props) => {
-  const { temp, celsius, handleClick } = props;
-  const celsiusTherm = '/images/thermometer-C.png';
-  const farenheitTherm = '/images/thermometer-F.png';
-  const click = () => {
-    handleClick()
-  };
-  return(
-    <div className='temp-container'>
-      <img src={(celsius)? celsiusTherm : farenheitTherm} alt='thermometer'/>
-      <p className='temp' onClick={click}>
-        {(celsius) 
-          ? Math.round(temp - 273)
-          : Math.round(1.8 * (temp - 273) + 32)
-        }
-      </p>
-    </div>
+const Header = (props) => {
+  const { description } = this.props;
+  return (
+    <h1 className='description'>{description}</h1>
   )
 };
 
-Temperature.propTypes = {
-  temp: PropTypes.number.isRequired,
-  celsius: PropTypes.bool.isRequired,
-  handleClick: PropTypes.func.isRequired,
+Header.propTypes = {
+  description: PropTypes.string.isRequired,
 };
 
-export default class CurrentWeather extends Component {
-  state = {
-    celsius: false,
-    image: null,
+const CurrentWeather = (props) => {
+
+  const handleClick = () => {
+    const { toggleTemp } = props;
+    toggleTemp();
   };
 
-  setIcon = (weather) => {
-    switch(weather) {
-      case 'Thunderstorm':
-        this.setState({
-          image: '/images/storm.png',
-        })
-        break;
-      case 'Drizzle':
-        this.setState({
-          image: '/images/Drizzle.png',
-        })
-        break;
-      case 'Rain':
-        this.setState({
-          image: '/images/rain.png',
-        })
-        break;
-      case 'Snow':
-        this.setState({
-          image: '/images/snow.png',
-        })
-        break;
-      case 'Clear':
-        this.setState({
-          image: '/images/sunny.png',
-        })
-        break;
-      case 'Fog':
-        this.setState({
-          image: '/images/fog.png',
-        })
-        break;
-      case 'Tornado':
-        this.setState({
-          image: '/images/tornado.png',
-        })
-        break;
-      case 'Clouds':
-        this.setState({
-          image: '/images/cloudy.png',
-        })
-        break;
-      default:
-        return null;
-    };
-  };
-
-  componentDidMount () {
-    const { weather } = this.props;
-    this.setIcon(weather);
-  };
-
-  handleClick = () => {
-    this.setState({
-      celsius: !this.state.celsius,
-    });
-  };
-
-  render() {
-    const {
-      temp,
-      clouds,
-      wind,
-      weather,
-      description
-    } = this.props;
-    const {
-      celsius,
-      image
-    } = this.state;
-    
-    return (
-      <div className='container'>
-        <div className='icon-container'>
-          <h1 className='description'>{description}</h1>
-          <img 
-            className='icon' 
-            src={image} 
-            alt={weather} 
-          />
-          
-          <Temperature 
-            temp={temp} 
-            celsius={celsius} 
-            handleClick={this.handleClick}
-          />         
-        </div>
-
-        <div className='info-panel'>
-          <img src='/images/cloud-small.png' alt='clouds'/>
-          <p className='clouds'>{clouds}%</p>
-          <img src='/images/wind-small.png' alt='wind'/>
-          <p className='wind'>{wind} Km/h</p>
-        </div>
+  const {
+    temp,
+    clouds,
+    wind,
+    weather,
+    farenheit,
+    description,
+    icon,
+  } = props;
+  
+  return (
+    <div className='container'>
+      <div className='icon-container'>
+        <h1 className='description'>{description}</h1>
+        <img 
+          className='icon' 
+          src={icon} 
+          alt={weather} 
+        />
+        
+        <Temperature 
+          temp={temp} 
+          farenheit={farenheit} 
+          handleClick={handleClick}
+          containerClassName='temp-container'
+          pClassName='temp'
+        />         
       </div>
-    )
-  }
+
+      <div className='info-panel'>
+        <img src='/images/cloud-small.png' alt='clouds'/>
+        <p className='clouds'>{clouds}%</p>
+        <img src='/images/wind-small.png' alt='wind'/>
+        <p className='wind'>{wind} Km/h</p>
+      </div>
+    </div>
+  )
 }
 
 CurrentWeather.propTypes = {
@@ -139,4 +66,8 @@ CurrentWeather.propTypes = {
   wind: PropTypes.number.isRequired,
   temp: PropTypes.number.isRequired,
   weather: PropTypes.string.isRequired,
+  toggleTemp: PropTypes.func.isRequired,
+  farenheit: PropTypes.bool.isRequired,
 };
+
+export default CurrentWeather;
