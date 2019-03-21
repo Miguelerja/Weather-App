@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Temperature from '../temperature/Temperature';
 import './forecast.css';
+import setIcon from '../../utils/setIcon';
 
-const Forecast = (props) => {
-  const listForescast = () => {
-    const { forecast, farenheit, icon } = props;
 
+class Forecast extends Component {
+  state = {
+    image: null,
+  };
+
+  listForescast = () => {
+    const { forecast, farenheit } = this.props;
+    
     return forecast.map((forecast, index) => {
       const { temp } = forecast.main;
       const { description, main } = forecast.weather[0];
+      const icon = setIcon(main);
 
       return(
         <div className='forecast-item' key={`${temp}${index}`}>
@@ -26,17 +33,18 @@ const Forecast = (props) => {
     });
   };
 
-  return(
-    <div className='forecast-container'>
-      {listForescast()}
-    </div>
-  )
+  render () {
+    return(
+      <div className='forecast-container'>
+        {this.listForescast()}
+      </div>
+    )
+  }
 };
 
 Forecast.propTypes = {
   forecast: PropTypes.array.isRequired,
   farenheit: PropTypes.bool.isRequired,
-  icon: PropTypes.string.isRequired,
 };
 
 export default Forecast;

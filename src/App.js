@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CurrentWeather from './components/currentWeather/CurrentWeather';
 import weatherService from './utils/weather-service';
+import setIcon from './utils/setIcon';
 class App extends Component {
   state = {
     location: null,
@@ -8,53 +9,6 @@ class App extends Component {
     forecast: [],
     farenheit: false,
     image: null,
-  };
-
-  setIcon = (weather) => {
-    switch(weather) {
-      case 'Thunderstorm':
-        this.setState({
-          image: '/images/storm.png',
-        })
-        break;
-      case 'Drizzle':
-        this.setState({
-          image: '/images/Drizzle.png',
-        })
-        break;
-      case 'Rain':
-        this.setState({
-          image: '/images/rain.png',
-        })
-        break;
-      case 'Snow':
-        this.setState({
-          image: '/images/snow.png',
-        })
-        break;
-      case 'Clear':
-        this.setState({
-          image: '/images/sunny.png',
-        })
-        break;
-      case 'Fog':
-        this.setState({
-          image: '/images/fog.png',
-        })
-        break;
-      case 'Tornado':
-        this.setState({
-          image: '/images/tornado.png',
-        })
-        break;
-      case 'Clouds':
-        this.setState({
-          image: '/images/cloudy.png',
-        })
-        break;
-      default:
-        return null;
-    };
   };
 
   getLocationWeather = () => {
@@ -80,7 +34,9 @@ class App extends Component {
         })
         .then(() => {
           const weather = this.state.currentWeather.weather.main;
-          this.setIcon(weather);
+          this.setState({
+            image : setIcon(weather),
+          });
         })
         .then(() => {
           weatherService.getForecastByCoords(location)
