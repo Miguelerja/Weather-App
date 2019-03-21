@@ -1,0 +1,16 @@
+.description{
+  height: 3rem;
+  width: 50%;
+  text-align: center;
+  text-transform: capitalize;
+  margin: 10% auto;
+  font-size: 3rem;
+}
+
+.weather{
+  height: 3rem;
+  width: 50%;
+  margin: 10% auto;
+  text-align: center;
+  font-size: 1.5rem;
+}

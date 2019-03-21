@@ -2,18 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './currentWeather.css';
 import Temperature from '../temperature/Temperature';
+import Header from '../header/Header';
 import Forecast from '../forecast/Forecast';
-
-const Header = (props) => {
-  const { description } = this.props;
-  return (
-    <h1 className='description'>{description}</h1>
-  )
-};
-
-Header.propTypes = {
-  description: PropTypes.string.isRequired,
-};
 
 const CurrentWeather = (props) => {
 
@@ -36,7 +26,7 @@ const CurrentWeather = (props) => {
   return (
     <div className='container'>
       <div className='icon-container'>
-        <h1 className='description'>{description}</h1>
+        <Header description={description} weather={weather} />
         <img 
           className='icon' 
           src={icon} 
