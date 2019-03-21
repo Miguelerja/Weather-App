@@ -25,7 +25,7 @@ class Forecast extends Component {
             temp={temp}
             farenheit={farenheit}
             containerClassName='forecast-temp-container'
-            pContainer='forecast-temp'
+            pClassName='forecast-temp'
           />
           <p className='forecast-desc'>{main}</p>
         </div>
