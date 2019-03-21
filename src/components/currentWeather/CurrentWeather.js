@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './currentWeather.css';
 import Temperature from '../temperature/Temperature';
+import Forecast from '../forecast/Forecast';
 
 const Header = (props) => {
   const { description } = this.props;
@@ -29,6 +30,7 @@ const CurrentWeather = (props) => {
     farenheit,
     description,
     icon,
+    forecast,
   } = props;
   
   return (
@@ -56,6 +58,13 @@ const CurrentWeather = (props) => {
         <img src='/images/wind-small.png' alt='wind'/>
         <p className='wind'>{wind} Km/h</p>
       </div>
+      
+      <Forecast 
+        forecast={forecast}
+        farenheit={farenheit}
+        icon={icon}
+
+      />
     </div>
   )
 }

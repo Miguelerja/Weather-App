@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CurrentWeather from './components/currentWeather/CurrentWeather';
-import Forecast from './components/forecast/Forecast';
 import weatherService from './utils/weather-service';
 class App extends Component {
   state = {
@@ -117,23 +116,17 @@ class App extends Component {
     return (
       <div className="App">
       {(location) ? 
-        <>
-          <CurrentWeather 
-            weather={weather.main}
-            temp={conditions.temp}
-            description={weather.description}
-            wind={wind.speed}
-            clouds={clouds.all}
-            farenheit={farenheit}
-            toggleTemp={this.toggleTemp}
-            icon={image}
-          />
-          <Forecast 
-            forecast={forecast} 
-            farenheit={farenheit}
-            icon={image}
-          />
-        </>
+        <CurrentWeather 
+          weather={weather.main}
+          temp={conditions.temp}
+          description={weather.description}
+          wind={wind.speed}
+          clouds={clouds.all}
+          farenheit={farenheit}
+          toggleTemp={this.toggleTemp}
+          icon={image}
+          forecast={forecast} 
+        />
         :
         <p>Loading</p>
       }
