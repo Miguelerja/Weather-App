@@ -19,6 +19,16 @@ class WeatherService {
     return this.weather.get(`/forecast?lat=${lat}&lon=${long}&appid=${this.token}`)
       .then(({ data }) => data);
   }
+
+  getWeatherByName(name){
+    return this.weather.get(`api.openweathermap.org/data/2.5/weather?q=${name}`)
+      .then(({ data }) => data);
+  }
+
+  getForecastByName(name){
+    return this.weather.get(`api.openweathermap.org/data/2.5/forecast?q=${name}`)
+      .then(({ data }) => data);
+  }
 };
 
 const weatherService = new WeatherService();
