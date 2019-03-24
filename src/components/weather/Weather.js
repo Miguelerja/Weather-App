@@ -5,7 +5,7 @@ import Temperature from '../temperature/Temperature';
 import Header from '../header/Header';
 import Forecast from '../forecast/Forecast';
 
-const CurrentWeather = (props) => {
+const Weather = (props) => {
 
   const handleClick = () => {
     const { toggleTemp } = props;
@@ -21,12 +21,13 @@ const CurrentWeather = (props) => {
     description,
     icon,
     forecast,
+    city
   } = props;
   
   return (
     <div className='container'>
       <div className='icon-container'>
-        <Header description={description} weather={weather} />
+        <Header description={description} weather={weather} city={city} />
         <img 
           className='icon' 
           src={icon} 
@@ -59,7 +60,8 @@ const CurrentWeather = (props) => {
   )
 }
 
-CurrentWeather.propTypes = {
+Weather.propTypes = {
+  city: PropTypes.string,
   description: PropTypes.string.isRequired,
   clouds: PropTypes.number.isRequired,
   wind: PropTypes.number.isRequired,
@@ -69,4 +71,4 @@ CurrentWeather.propTypes = {
   farenheit: PropTypes.bool.isRequired,
 };
 
-export default CurrentWeather;
+export default Weather;

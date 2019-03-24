@@ -39,12 +39,12 @@ class Header extends Component  {
 
   render () {
     const { clicked } = this.state;
-    const { weather } = this.props;
+    const { weather, city } = this.props;
     return (
       <p className={(clicked) ? 'weather' : 'description'} onClick={this.toggleDescription}>
         {(clicked) 
           ? this.setMessage(weather)
-          : weather
+          : `${city}, ${weather}`
         }
       </p>
     )
@@ -52,6 +52,7 @@ class Header extends Component  {
 };
 
 Header.propTypes = {
+  city: PropTypes.string,
   description: PropTypes.string.isRequired,
   weather: PropTypes.string.isRequired,
 };

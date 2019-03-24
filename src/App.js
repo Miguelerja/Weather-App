@@ -25,7 +25,7 @@ class App extends Component {
       weatherService.getWeatherByCoords(location),
       weatherService.getForecastByCoords(location),
     ]).then((response) => {
-      const { main, weather, clouds, wind } = response[0];
+      const { main, weather, clouds, wind, name } = response[0];
       const currentWeather = {
         weather: weather[0],
         clouds: clouds,
@@ -41,6 +41,7 @@ class App extends Component {
       ];
       
       this.setState({
+        city: name,
         location: location,
         currentWeather: currentWeather,
         image: setIcon(weather[0].main),
@@ -62,12 +63,13 @@ class App extends Component {
 
   render() {
     const { weather, clouds, wind, conditions } = this.state.currentWeather;
-    const { location, forecast, farenheit, image } = this.state;
+    const { location, forecast, farenheit, image, city } = this.state;
     return (
       <Router className="App">
         <Route exact path='/' render={() => (
           (location) ? 
             <Weather 
+              city={city}
               weather={weather.main}
               temp={conditions.temp}
               description={weather.description}

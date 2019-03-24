@@ -21,12 +21,12 @@ class WeatherService {
   }
 
   getWeatherByName(name){
-    return this.weather.get(`api.openweathermap.org/data/2.5/weather?q=${name}`)
+    return this.weather.get(`/weather?q=${name}&appid=${this.token}`)
       .then(({ data }) => data);
   }
 
   getForecastByName(name){
-    return this.weather.get(`api.openweathermap.org/data/2.5/forecast?q=${name}`)
+    return this.weather.get(`/forecast?q=${name}&appid=${this.token}`)
       .then(({ data }) => data);
   }
 };
