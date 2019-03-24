@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './currentWeather.css';
+import './weather.css';
 import Temperature from '../temperature/Temperature';
 import Header from '../header/Header';
 import Forecast from '../forecast/Forecast';

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import CurrentWeather from './components/currentWeather/CurrentWeather';
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import Weather from './components/weather/Weather';
+import CitySearch from './components/citySearch/CitySearch';
 import weatherService from './utils/weather-service';
 import setIcon from './utils/setIcon';
+
 class App extends Component {
   state = {
     location: null,
@@ -61,23 +64,26 @@ class App extends Component {
     const { weather, clouds, wind, conditions } = this.state.currentWeather;
     const { location, forecast, farenheit, image } = this.state;
     return (
-      <div className="App">
-      {(location) ? 
-        <CurrentWeather 
-          weather={weather.main}
-          temp={conditions.temp}
-          description={weather.description}
-          wind={wind.speed}
-          clouds={clouds.all}
-          farenheit={farenheit}
-          toggleTemp={this.toggleTemp}
-          icon={image}
-          forecast={forecast} 
-        />
-        :
-        <p>Loading</p>
-      }
-      </div>
+      <Router className="App">
+        <Route exact path='/' render={() => (
+          (location) ? 
+            <Weather 
+              weather={weather.main}
+              temp={conditions.temp}
+              description={weather.description}
+              wind={wind.speed}
+              clouds={clouds.all}
+              farenheit={farenheit}
+              toggleTemp={this.toggleTemp}
+              icon={image}
+              forecast={forecast} 
+            />
+            :
+            <p>Loading</p>
+        )} />
+
+        <Route path='/search' component={CitySearch} />
+      </Router>
     );
   }
 }
