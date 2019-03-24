@@ -111,7 +111,7 @@ export default class CitySearch extends Component {
       <>
         {(clicked) ?
           (loading)
-            ? <p>Loading</p>
+            ? <Weather />
             : <Weather 
               city={city}
               weather={weather.main}

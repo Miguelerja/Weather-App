@@ -69,6 +69,19 @@ Weather.propTypes = {
   weather: PropTypes.string.isRequired,
   toggleTemp: PropTypes.func.isRequired,
   farenheit: PropTypes.bool.isRequired,
+  forecast: PropTypes.array.isRequired,
+  icon: PropTypes.string.isRequired,
+};
+
+Weather.defaultProps = {
+  city: 'Mars',
+  description: 'Clear',
+  weather: 'Clear',
+  temp: 273,
+  clouds: 0,
+  forecast: [],
+  wind: 0,
+  icon: '/images/sunny.png',
 };
 
 export default Weather;

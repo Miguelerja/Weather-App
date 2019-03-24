@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Weather from './components/weather/Weather';
 import CitySearch from './components/citySearch/CitySearch';
+import URLNotFound from './components/urlNotFound/URLNotFound';
 import weatherService from './utils/weather-service';
 import setIcon from './utils/setIcon';
 
@@ -66,25 +67,30 @@ class App extends Component {
     const { location, forecast, farenheit, image, city } = this.state;
     return (
       <Router className="App">
-        <Route exact path='/' render={() => (
-          (location) ? 
-            <Weather 
-              city={city}
-              weather={weather.main}
-              temp={conditions.temp}
-              description={weather.description}
-              wind={wind.speed}
-              clouds={clouds.all}
-              farenheit={farenheit}
-              toggleTemp={this.toggleTemp}
-              icon={image}
-              forecast={forecast} 
-            />
-            :
-            <p>Loading</p>
-        )} />
+        <Switch>
+          <Route exact path='/' render={() => (
+            (location) ?
+            <>
+              <Weather 
+                city={city}
+                weather={weather.main}
+                temp={conditions.temp}
+                description={weather.description}
+                wind={wind.speed}
+                clouds={clouds.all}
+                farenheit={farenheit}
+                toggleTemp={this.toggleTemp}
+                icon={image}
+                forecast={forecast} 
+              />
+            </>
+              :
+              <Weather />
+          )} />
 
-        <Route path='/search' component={CitySearch} />
+          <Route path='/search' component={CitySearch} />
+          <Route component={URLNotFound} />
+        </Switch>
       </Router>
     );
   }
