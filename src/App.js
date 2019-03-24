@@ -17,43 +17,33 @@ class App extends Component {
         long: position.coords.longitude,
         lat: position.coords.latitude,
       };
+    
+    Promise.all([
+      weatherService.getWeatherByCoords(location),
+      weatherService.getForecastByCoords(location),
+    ]).then((response) => {
+      const { main, weather, clouds, wind } = response[0];
+      const currentWeather = {
+        weather: weather[0],
+        clouds: clouds,
+        wind: wind,
+        conditions: main,
+      };
+      const forecast = [
+        response[1].list[8],
+        response[1].list[16],
+        response[1].list[24],
+        response[1].list[32],
+        response[1].list[39]
+      ];
       
-      weatherService.getWeatherByCoords(location)
-        .then(response => {
-          const { main, weather, clouds, wind } = response;
-          const currentWeather = {
-            weather: weather[0],
-            clouds: clouds,
-            wind: wind,
-            conditions: main,
-          };
-          this.setState({
-            location: location,
-            currentWeather: currentWeather,
-          });
-        })
-        .then(() => {
-          const weather = this.state.currentWeather.weather.main;
-          this.setState({
-            image : setIcon(weather),
-          });
-        })
-        .then(() => {
-          weatherService.getForecastByCoords(location)
-            .then(response => {
-              const forecast = [
-                response.list[8],
-                response.list[16],
-                response.list[24],
-                response.list[32],
-                response.list[39]
-              ];
-              this.setState({
-                forecast: forecast,
-              });
-            })
-        })
-        .catch(error => console.log(error))
+      this.setState({
+        location: location,
+        currentWeather: currentWeather,
+        image: setIcon(weather[0].main),
+        forecast: forecast,
+      });
+    }).catch(error => console.log(error));
     });
   };
 
