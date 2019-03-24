@@ -4,6 +4,10 @@ html{
   background-repeat: no-repeat;
 }
 
+:focus{
+  outline: none;
+}
+
 p, h1{
   margin: 0;
   color: white;
