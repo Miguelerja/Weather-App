@@ -25,8 +25,8 @@ class App extends Component {
     Promise.all([
       weatherService.getWeatherByCoords(location),
       weatherService.getForecastByCoords(location),
-    ]).then((response) => {
-      const { main, weather, clouds, wind, name } = response[0];
+    ]).then(([coordsWeather, coordsForecast]) => {
+      const { main, weather, clouds, wind, name } = coordsWeather;
       const currentWeather = {
         weather: weather[0],
         clouds: clouds,
@@ -34,11 +34,11 @@ class App extends Component {
         conditions: main,
       };
       const forecast = [
-        response[1].list[8],
-        response[1].list[16],
-        response[1].list[24],
-        response[1].list[32],
-        response[1].list[39]
+        coordsForecast.list[8],
+        coordsForecast.list[16],
+        coordsForecast.list[24],
+        coordsForecast.list[32],
+        coordsForecast.list[39]
       ];
       
       this.setState({

@@ -60,7 +60,6 @@ export default class CitySearch extends Component {
       weatherService.getWeatherByName(name),
       weatherService.getForecastByName(name),
     ]).then((response) => {
-      console.log(response)
       const { main, weather, clouds, wind } = response[0];
       const currentWeather = {
         weather: weather[0],
