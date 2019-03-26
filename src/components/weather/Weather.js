@@ -62,15 +62,15 @@ const Weather = (props) => {
 
 Weather.propTypes = {
   city: PropTypes.string,
-  description: PropTypes.string.isRequired,
-  clouds: PropTypes.number.isRequired,
-  wind: PropTypes.number.isRequired,
-  temp: PropTypes.number.isRequired,
-  weather: PropTypes.string.isRequired,
-  toggleTemp: PropTypes.func.isRequired,
-  farenheit: PropTypes.bool.isRequired,
-  forecast: PropTypes.array.isRequired,
-  icon: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  clouds: PropTypes.number,
+  wind: PropTypes.number,
+  temp: PropTypes.number,
+  weather: PropTypes.string,
+  toggleTemp: PropTypes.func,
+  farenheit: PropTypes.bool,
+  forecast: PropTypes.array,
+  icon: PropTypes.string,
 };
 
 Weather.defaultProps = {

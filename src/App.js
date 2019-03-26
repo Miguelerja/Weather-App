@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Weather from './components/weather/Weather';
 import CitySearch from './components/citySearch/CitySearch';
 import URLNotFound from './components/urlNotFound/URLNotFound';
-import weatherService from './utils/weather-service';
-import setIcon from './utils/setIcon';
+import { getLocationWeather } from './utils/getWeather';
 
 class App extends Component {
   state = {
@@ -15,45 +14,17 @@ class App extends Component {
     image: null,
   };
 
-  getLocationWeather = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const location = {
-        long: position.coords.longitude,
-        lat: position.coords.latitude,
-      };
-    
-    Promise.all([
-      weatherService.getWeatherByCoords(location),
-      weatherService.getForecastByCoords(location),
-    ]).then(([coordsWeather, coordsForecast]) => {
-      const { main, weather, clouds, wind, name } = coordsWeather;
-      const currentWeather = {
-        weather: weather[0],
-        clouds: clouds,
-        wind: wind,
-        conditions: main,
-      };
-      const forecast = [
-        coordsForecast.list[8],
-        coordsForecast.list[16],
-        coordsForecast.list[24],
-        coordsForecast.list[32],
-        coordsForecast.list[39]
-      ];
-      
+  componentDidMount () {
+    getLocationWeather()
+    .then(({ forecast, city, location, currentWeather, image }) => {
       this.setState({
-        city: name,
+        city: city,
         location: location,
         currentWeather: currentWeather,
-        image: setIcon(weather[0].main),
+        image: image,
         forecast: forecast,
       });
-    }).catch(error => console.log(error));
-    });
-  };
-
-  componentDidMount () {
-    this.getLocationWeather();
+    })
   };
 
   toggleTemp = () => {

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Link from 'react-router-dom';
 import PropTypes from 'prop-types';
-import weatherService from '../../utils/weather-service';
-import setIcon from '../../utils/setIcon';
 import './citySearch.css';
 import Weather from '../weather/Weather';
+import { getCityWeather } from '../../utils/getWeather';
 
 const Form = (props) => {
   const { handleSearchInput, name, buttonClick } = props;
@@ -55,36 +54,6 @@ export default class CitySearch extends Component {
     image: null,
   }
 
-  getCityWeather = (name) => {    
-    Promise.all([
-      weatherService.getWeatherByName(name),
-      weatherService.getForecastByName(name),
-    ]).then((response) => {
-      const { main, weather, clouds, wind } = response[0];
-      const currentWeather = {
-        weather: weather[0],
-        clouds: clouds,
-        wind: wind,
-        conditions: main,
-      };
-      const forecast = [
-        response[1].list[8],
-        response[1].list[16],
-        response[1].list[24],
-        response[1].list[32],
-        response[1].list[39]
-      ];
-      
-      this.setState({
-        currentWeather: currentWeather,
-        image: setIcon(weather[0].main),
-        forecast: forecast,
-        clicked: !this.state.clicked,
-        loading: false,
-      });
-    }).catch(error => console.log(error));
-  };
-
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -93,7 +62,16 @@ export default class CitySearch extends Component {
 
   handleClick = () => {
     const { city } = this.state;
-    this.getCityWeather(city);
+    getCityWeather(city)
+      .then(({ currentWeather, image, forecast }) => {
+        this.setState({
+          currentWeather: currentWeather,
+          image: image,
+          forecast: forecast,
+          clicked: !this.state.clicked,
+          loading: false,
+        })
+      })
   };
 
   toggleTemp = () => {

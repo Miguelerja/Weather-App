@@ -44,7 +44,7 @@ class Forecast extends Component {
 
 Forecast.propTypes = {
   forecast: PropTypes.array.isRequired,
-  farenheit: PropTypes.bool.isRequired,
+  farenheit: PropTypes.bool,
 };
 
 export default Forecast;

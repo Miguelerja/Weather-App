@@ -22,8 +22,8 @@ const Temperature = (props) => {
 };
 
 Temperature.propTypes = {
-  temp: PropTypes.number.isRequired,
-  farenheit: PropTypes.bool.isRequired,
+  temp: PropTypes.number,
+  farenheit: PropTypes.bool,
   handleClick: PropTypes.func,
   containerClassName: PropTypes.string.isRequired,
   pClassName: PropTypes.string.isRequired,
