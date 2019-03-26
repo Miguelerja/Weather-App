@@ -60,18 +60,18 @@ export default class CitySearch extends Component {
     });
   };
 
-  handleClick = () => {
+  handleClick = async () => {
     const { city } = this.state;
-    getCityWeather(city)
-      .then(({ currentWeather, image, forecast }) => {
-        this.setState({
-          currentWeather: currentWeather,
-          image: image,
-          forecast: forecast,
-          clicked: !this.state.clicked,
-          loading: false,
-        })
+    try {
+      const { currentWeather, image, forecast } = await getCityWeather(city);
+      this.setState({
+        currentWeather: currentWeather,
+        image: image,
+        forecast: forecast,
+        clicked: !this.state.clicked,
+        loading: false,
       })
+    } catch(error) {console.warn(error)};
   };
 
   toggleTemp = () => {

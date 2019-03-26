@@ -14,9 +14,9 @@ class App extends Component {
     image: null,
   };
 
-  componentDidMount () {
-    getLocationWeather()
-    .then(({ forecast, city, location, currentWeather, image }) => {
+  async componentDidMount () {
+    try {
+      const { forecast, city, location, currentWeather, image } = await getLocationWeather();
       this.setState({
         city: city,
         location: location,
@@ -24,7 +24,7 @@ class App extends Component {
         image: image,
         forecast: forecast,
       });
-    })
+    } catch(error) {console.warn(error)};
   };
 
   toggleTemp = () => {
