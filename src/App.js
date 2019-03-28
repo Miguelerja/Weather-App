@@ -36,7 +36,6 @@ class App extends Component {
   render() {
     const { weather, clouds, wind, conditions } = this.state.currentWeather;
     const { location, forecast, farenheit, image, city } = this.state;
-    console.log(forecast)
     return (
       <Router className="App">
         <Switch>
