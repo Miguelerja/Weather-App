@@ -49,12 +49,11 @@ const Weather = (props) => {
         <img src='/images/wind-small.png' alt='wind'/>
         <p className='wind'>{wind} Km/h</p>
       </div>
-      
+
       <Forecast 
         forecast={forecast}
         farenheit={farenheit}
         icon={icon}
-
       />
     </div>
   )

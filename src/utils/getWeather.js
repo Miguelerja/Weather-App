@@ -25,7 +25,6 @@ export function getLocationWeather() {
           coordsForecast.list[16],
           coordsForecast.list[24],
           coordsForecast.list[32],
-          coordsForecast.list[39]
         ];
         
         resolve({
